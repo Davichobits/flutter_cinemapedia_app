@@ -43,20 +43,19 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
     final moviesSlideshow = ref.watch(moviesSlideShowProvider);
 
+    return FullScreenLoader();
+
     return CustomScrollView(
       slivers: [
-
         const SliverAppBar(
           floating: true,
           flexibleSpace: FlexibleSpaceBar(
             title: CustomAppbar(),
           ),
         ),
-
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (context, index) {
-              
               return Column(children: [
                 MoviesSlideshow(movies: moviesSlideshow),
                 MoviesHorizontalListview(
@@ -64,7 +63,9 @@ class _HomeViewState extends ConsumerState<_HomeView> {
                     title: 'En cines',
                     subtitle: 'Lunes 20',
                     loadNextPage: () {
-                      ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+                      ref
+                          .read(nowPlayingMoviesProvider.notifier)
+                          .loadNextPage();
                     }),
                 MoviesHorizontalListview(
                     movies: popularMovies,
@@ -91,6 +92,7 @@ class _HomeViewState extends ConsumerState<_HomeView> {
             childCount: 1,
           ),
         ),
-      ],);
+      ],
+    );
   }
 }
