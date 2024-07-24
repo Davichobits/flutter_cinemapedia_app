@@ -29,11 +29,17 @@ class _HomeViewState extends ConsumerState<_HomeView> {
   void initState() {
     super.initState();
     ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+    ref.read(popularMoviesProvider.notifier).loadNextPage();
+    ref.read(topRatedMoviesProvider.notifier).loadNextPage();
+    ref.read(upCommingMoviesProvider.notifier).loadNextPage();
   }
 
   @override
   Widget build(BuildContext context) {
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
+    final popularMovies = ref.watch(popularMoviesProvider);
+    final topRatedMovies = ref.watch(topRatedMoviesProvider);
+    final upCommingMovies = ref.watch(upCommingMoviesProvider);
 
     final moviesSlideshow = ref.watch(moviesSlideShowProvider);
 
@@ -61,11 +67,23 @@ class _HomeViewState extends ConsumerState<_HomeView> {
                       ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
                     }),
                 MoviesHorizontalListview(
-                    movies: nowPlayingMovies,
-                    title: 'En cines',
-                    subtitle: 'Lunes 20',
+                    movies: popularMovies,
+                    title: 'Populares',
+                    // subtitle: 'Lunes 20',
                     loadNextPage: () {
-                      ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+                      ref.read(popularMoviesProvider.notifier).loadNextPage();
+                    }),
+                MoviesHorizontalListview(
+                    movies: topRatedMovies,
+                    title: 'Mejor puntuadas',
+                    loadNextPage: () {
+                      ref.read(topRatedMoviesProvider.notifier).loadNextPage();
+                    }),
+                MoviesHorizontalListview(
+                    movies: upCommingMovies,
+                    title: 'Próximamente',
+                    loadNextPage: () {
+                      ref.read(upCommingMoviesProvider.notifier).loadNextPage();
                     }),
                 const SizedBox(height: 50),
               ]);
