@@ -39,8 +39,75 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
         physics: const ClampingScrollPhysics(),
         slivers: [
           _CustomSliverAppBar(movie: movie),
+          SliverList(
+              delegate: SliverChildBuilderDelegate(
+            (context, index) => _MovieDetails(movie: movie),
+            childCount: 1,
+          ))
         ],
       ),
+    );
+  }
+}
+
+class _MovieDetails extends StatelessWidget {
+  final Movie movie;
+  const _MovieDetails({required this.movie});
+  @override
+  Widget build(BuildContext context) {
+
+    final size = MediaQuery.of(context).size;
+    final textStyles = Theme.of(context).textTheme;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.all(8),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.network(
+                  movie.posterPath,
+                  width: size.width * 0.30,
+                ),
+              ),
+              const SizedBox(width: 10),
+              // Description
+              SizedBox(
+                width: (size.width -40) * 0.7,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(movie.title, style: textStyles.titleLarge),
+                    
+                    Text(movie.overview),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+
+        // Generos
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Wrap(
+            children: [
+              ...movie.genreIds.map((gender)=>Container(
+                margin: const EdgeInsets.only(right: 10),
+                child: Chip(
+                  label: Text(gender),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                )
+              ))
+            ],
+          )
+        )
+        //TODO: Mostrar listview de actores
+      ],
     );
   }
 }
@@ -52,7 +119,6 @@ class _CustomSliverAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final size = MediaQuery.of(context).size;
 
     return SliverAppBar(
@@ -68,50 +134,42 @@ class _CustomSliverAppBar extends StatelessWidget {
         ),
         background: Stack(
           children: [
-
             SizedBox.expand(
               child: Image.network(
                 movie.posterPath,
                 fit: BoxFit.cover,
               ),
             ),
-
             const SizedBox.expand(
               child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    stops: [0.7, 1.0],
-                    colors: [
-                      Colors.transparent,
-                      Colors.black87,
-                    ]
-                  )
-                )
-              ),
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          stops: [
+                    0.7,
+                    1.0
+                  ],
+                          colors: [
+                    Colors.transparent,
+                    Colors.black87,
+                  ]))),
             ),
-
             const SizedBox.expand(
               child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    stops: [0.0, 0.3],
-                    colors: [
-                      Colors.black87,
-                      Colors.transparent,
-                    ]
-                  )
-                )
-              ),
+                  decoration: BoxDecoration(
+                      gradient:
+                          LinearGradient(begin: Alignment.topLeft, stops: [
+                0.0,
+                0.3
+              ], colors: [
+                Colors.black87,
+                Colors.transparent,
+              ]))),
             )
-
-
           ],
         ),
       ),
-
     );
   }
 }
