@@ -2,8 +2,8 @@ import 'package:cinemapedia_app/config/constants/enviroment.dart';
 import 'package:cinemapedia_app/domain/datasources/movies_datasource.dart';
 import 'package:cinemapedia_app/domain/entities/movie.dart';
 import 'package:cinemapedia_app/infrastructure/mappers/movie_mapper.dart';
-import 'package:cinemapedia_app/infrastructure/models/movie_details.dart';
-import 'package:cinemapedia_app/infrastructure/models/moviedb_response.dart';
+import 'package:cinemapedia_app/infrastructure/models/movidedb/movie_details.dart';
+import 'package:cinemapedia_app/infrastructure/models/movidedb/moviedb_response.dart';
 import 'package:dio/dio.dart';
 
 class MovieDBDatasource extends MoviesDatasource {

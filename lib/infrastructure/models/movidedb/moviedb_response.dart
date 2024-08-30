@@ -1,4 +1,4 @@
-import 'package:cinemapedia_app/infrastructure/models/movie_movidedb.dart';
+import 'package:cinemapedia_app/infrastructure/models/movidedb/movie_movidedb.dart';
 
 class MovieDbResponse {
     final Dates? dates;
